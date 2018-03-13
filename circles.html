@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>Patatap clone</title>
+    <link rel="stylesheet" type="text/css" href="style.css">
+    <script type="text/javascript" src="paper-full.js"></script>
+    <script type="text/javascript" src="howler.min.js"></script>
+    <script type="text/paperscript" canvas = "myCanvas">
+    var body = document.querySelector('body')
+    var keys = { 'a' : ['rgb('+ random(255)+ ', ' + random(255) + ', '+ random(255)+ ')', new Howl({src: ['sounds/bubbles.mp3']})],
+                   'b' : ['rgb('+ random(255)+ ', ' + random(255) + ', '+ random(255)+ ')', new Howl({src: ['sounds/clay.mp3']})],
+                   'c' : ['rgb('+ random(255)+ ', ' + random(255) + ', '+ random(255)+ ')', new Howl({src: ['sounds/confetti.mp3']})],
+                  'd' : ['rgb('+ random(255)+ ', ' + random(255) + ', '+ random(255)+ ')', new Howl({src: ['sounds/corona.mp3']})],
+                  'e' : ['rgb('+ random(255)+ ', ' + random(255) + ', '+ random(255)+ ')', new Howl({src: ['sounds/dotted-spiral.mp3']})],
+                  'f' : ['rgb('+ random(255)+ ', ' + random(255) + ', '+ random(255)+ ')', new Howl({src: ['sounds/flash-1.mp3']})],
+                  'g' : ['rgb('+ random(255)+ ', ' + random(255) + ', '+ random(255)+ ')', new Howl({src: ['sounds/flash-2.mp3']})],
+                  'h' : ['rgb('+ random(255)+ ', ' + random(255) + ', '+ random(255)+ ')', new Howl({src: ['sounds/flash-3.mp3']})],
+                  'i' : ['rgb('+ random(255)+ ', ' + random(255) + ', '+ random(255)+ ')', new Howl({src: ['sounds/glimmer.mp3']})],
+                  'j' : ['rgb('+ random(255)+ ', ' + random(255) + ', '+ random(255)+ ')', new Howl({src: ['sounds/moon.mp3']})],
+                  'k' : ['rgb('+ random(255)+ ', ' + random(255) + ', '+ random(255)+ ')', new Howl({src: ['sounds/pinwheel.mp3']})],
+                  'l' : ['rgb('+ random(255)+ ', ' + random(255) + ', '+ random(255)+ ')', new Howl({src: ['sounds/piston-1.mp3']})],
+                  'm' : ['rgb('+ random(255)+ ', ' + random(255) + ', '+ random(255)+ ')', new Howl({src: ['sounds/piston-2.mp3']})],
+                  'n' : ['rgb('+ random(255)+ ', ' + random(255) + ', '+ random(255)+ ')', new Howl({src: ['sounds/piston-3.mp3']})],
+                  'o' : ['rgb('+ random(255)+ ', ' + random(255) + ', '+ random(255)+ ')', new Howl({src: ['sounds/prism-1.mp3']})],
+                  'p' : ['rgb('+ random(255)+ ', ' + random(255) + ', '+ random(255)+ ')', new Howl({src: ['sounds/prism-2.mp3']})],
+                  'q' : ['rgb('+ random(255)+ ', ' + random(255) + ', '+ random(255)+ ')', new Howl({src: ['sounds/prism-3.mp3']})],
+                  'r' : ['rgb('+ random(255)+ ', ' + random(255) + ', '+ random(255)+ ')', new Howl({src: ['sounds/splits.mp3']})],
+                  's' : ['rgb('+ random(255)+ ', ' + random(255) + ', '+ random(255)+ ')', new Howl({src: ['sounds/squiggle.mp3']})],
+                  't' : ['rgb('+ random(255)+ ', ' + random(255) + ', '+ random(255)+ ')', new Howl({src: ['sounds/strike.mp3']})],
+                  'u' : ['rgb('+ random(255)+ ', ' + random(255) + ', '+ random(255)+ ')', new Howl({src: ['sounds/suspension.mp3']})],
+                  'v' : ['rgb('+ random(255)+ ', ' + random(255) + ', '+ random(255)+ ')', new Howl({src: ['sounds/timer.mp3']})],
+                  'w' : ['rgb('+ random(255)+ ', ' + random(255) + ', '+ random(255)+ ')', new Howl({src: ['sounds/ufo.mp3']})],
+                  'x' : ['rgb('+ random(255)+ ', ' + random(255) + ', '+ random(255)+ ')', new Howl({src: ['sounds/veil.mp3']})],
+                  'y' : ['rgb('+ random(255)+ ', ' + random(255) + ', '+ random(255)+ ')', new Howl({src: ['sounds/wipe.mp3']})],
+                  'z' : ['rgb('+ random(255)+ ', ' + random(255) + ', '+ random(255)+ ')', new Howl({src: ['sounds/zig-zag.mp3']})]
+                }
+      var circles = []
+
+    function random(num){
+      return Math.floor(Math.random() * Math.floor(num))
+    }
+    //Create circle on keypress
+    function onKeyDown(e){
+    //Circle creation at random point
+      var myCircle = new Path.Circle({
+          center: [random(view.size.width -100),random(view.size.height -100)],
+          radius: 300,
+          fillColor: keys[e.key][0]
+      });
+      circles.push(myCircle)
+      keys[e.key][1].play()
+      circles.length > 75 ? circles.shift(): null;
+    }
+
+    function onFrame(event){
+      circles.forEach(function(e){
+        e.scale(.8);
+        e.fillColor.hue += 1;
+        e.area < 1 ? e.remove(): null;
+      })
+    }
+
+    </script>
+  </head>
+  <body>
+    <canvas id= "myCanvas" resize></canvas>
+  </body>
+</html>
